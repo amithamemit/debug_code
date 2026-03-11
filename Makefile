@@ -16,6 +16,7 @@ export COMMON_SOURCES LODEPNG_SOURCES ROOT_DIR COMMON_DIR
 
 # List of processes to build
 SUBDIRS = format_parser image_processor output_router control
+TEST_SUBDIRS = common/tests image_processor/tests output_router/tests control/tests
 
 # OS Selection
 ifeq ($(OS),Windows_NT)
@@ -38,7 +39,18 @@ all: $(SUBDIRS)
 $(SUBDIRS):
 	$(MAKE_CMD) -C $@
 
-clean:
-	$(foreach dir,$(SUBDIRS),$(MAKE_CMD) -C $(dir) clean &&) @echo Clean Complete.
+# Test targets
+test: $(TEST_SUBDIRS)
 
-.PHONY: all clean $(SUBDIRS)
+$(TEST_SUBDIRS):
+	$(MAKE_CMD) -C $@
+
+run_tests: test
+	$(foreach dir,$(TEST_SUBDIRS),$(MAKE_CMD) -C $(dir) run &&) @echo All Tests Passed.
+
+clean:
+	$(foreach dir,$(SUBDIRS),$(MAKE_CMD) -C $(dir) clean &&) \
+	$(foreach dir,$(TEST_SUBDIRS),$(MAKE_CMD) -C $(dir) clean &&) \
+	@echo Clean Complete.
+
+.PHONY: all clean $(SUBDIRS) $(TEST_SUBDIRS) test run_tests
