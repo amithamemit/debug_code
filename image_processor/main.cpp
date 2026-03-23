@@ -49,6 +49,10 @@ int main() {
                 // Defaulting to +20 brightness for this demonstration
                 processing::apply_brightness(msg.image_data, 20);
             }
+            else{
+                // no filter to be made, continuing to next file without appllying filters 
+                continue;
+            }
 
             // 3. Forward to the output_router
             std::vector<uint8_t> output_buffer = msg.serialize();
