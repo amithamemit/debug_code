@@ -36,16 +36,16 @@ int main() {
             if (msg.header.operations & icd::OP_GRAYSCALE) {
                 processing::apply_grayscale(msg.image_data);
             }
-            if (msg.header.operations & icd::OP_FLIP_HORIZONTAL) {
+            else if (msg.header.operations & icd::OP_FLIP_HORIZONTAL) {
                 processing::apply_flip_horizontal(msg.image_data, msg.header.width, msg.header.height);
             }
-            if (msg.header.operations & icd::OP_FLIP_VERTICAL) {
+            else if (msg.header.operations & icd::OP_FLIP_VERTICAL) {
                 processing::apply_flip_vertical(msg.image_data, msg.header.width, msg.header.height);
             }
-            if (msg.header.operations & icd::OP_INVERT) {
+            else if (msg.header.operations & icd::OP_INVERT) {
                 processing::apply_invert(msg.image_data);
             }
-            if (msg.header.operations & icd::OP_BRIGHTNESS) {
+            else if (msg.header.operations & icd::OP_BRIGHTNESS) {
                 // Defaulting to +20 brightness for this demonstration
                 processing::apply_brightness(msg.image_data, 20);
             }
